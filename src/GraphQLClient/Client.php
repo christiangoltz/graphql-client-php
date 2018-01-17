@@ -3,6 +3,7 @@
 namespace GraphQLClient;
 
 use GuzzleHttp\ClientInterface;
+use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;
 
 class Client
@@ -191,4 +192,28 @@ class Client
 
         return $result;
     }
+
+    public function assertGraphQlFields(array $fields, Query $query)
+    {
+        foreach ($query->getChildren() as $field) {
+            $this->assertFieldInArray($field, $fields);
+        }
+    }
+
+    protected function assertFieldInArray(Field $field, array $result)
+    {
+        if ($this->hasStringKeys($result)) {
+            Assert::assertArrayHasKey($field->getName(), $result);
+            if ($result[$field->getName()] !== null) {
+                foreach ($field->getChildren() as $child) {
+                    $this->assertFieldInArray($child, $result[$field->getName()]);
+                }
+            }
+        } else {
+            foreach ($result as $element) {
+                $this->assertFieldInArray($field, $element);
+            }
+        }
+    }
+
 }
