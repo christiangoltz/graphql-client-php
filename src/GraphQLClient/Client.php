@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\Assert;
 use Psr\Http\Message\ResponseInterface;
 
-class Client
+abstract class Client
 {
     /** @var string */
     protected $baseUrl;
@@ -23,7 +23,7 @@ class Client
     /** @var ResponseInterface */
     protected $response;
 
-    public function __construct(string $baseUrl, ClientInterface $client) {
+    public function __construct(string $baseUrl, ClientInterface $client = null) {
         $this->baseUrl = $baseUrl;
         $this->responseFields = null;
         $this->variables = [];
@@ -137,14 +137,7 @@ class Client
             $data = array_merge(['operations' => json_encode($data)], $multipart);
         }
 
-        $response = $this->client->request('POST', $this->getBaseUrl(), $data);
-        $responseBody = json_decode($response->getBody()->getContents(), true);
-
-        if (isset($responseBody['errors'])) {
-            throw new GraphQLException(sprintf('Mutation failed with error %s', json_encode($response['errors'])));
-        }
-
-        return $responseBody;
+        return $this->post($data);
     }
 
     public function mutate(Query $query, array $multipart = null): ResponseData
@@ -216,4 +209,16 @@ class Client
         }
     }
 
+    protected function post(array $data): array
+    {
+        $response = $this->client->request('POST', $this->getBaseUrl(), $data);
+        $responseBody = json_decode($response->getBody()->getContents(), true);
+
+        if (isset($responseBody['errors'])) {
+            throw new GraphQLException(sprintf('Mutation failed with error %s', json_encode($response['errors'])));
+        }
+
+        return $responseBody;
+
+    }
 }
