@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Helpers\GraphQLClient;
+namespace GraphQLClient;
 
 
 class GraphQLException extends \Exception

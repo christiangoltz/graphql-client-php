@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\GraphQLClient;
+namespace GraphQLClient;
 
 class Query extends Field
 {
