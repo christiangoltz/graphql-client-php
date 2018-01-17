@@ -4,7 +4,6 @@ namespace GraphQLClient;
 
 use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\Assert;
-use Psr\Http\Message\ResponseInterface;
 
 abstract class Client
 {
@@ -12,23 +11,15 @@ abstract class Client
     protected $baseUrl;
 
     /** @var array */
-    protected $responseFields;
-
-    /** @var array */
     protected $variables;
 
     /** @var ClientInterface */
     protected $client;
 
-    /** @var ResponseInterface */
-    protected $response;
-
     public function __construct(string $baseUrl, ClientInterface $client = null) {
         $this->baseUrl = $baseUrl;
-        $this->responseFields = null;
         $this->variables = [];
         $this->client = $client;
-        $this->response = null;
     }
 
     private function getQueryData(Query $query): array
@@ -159,16 +150,6 @@ abstract class Client
     public function getBaseUrl(): string
     {
         return $this->baseUrl;
-    }
-
-    public function getFields()
-    {
-        return $this->responseFields;
-    }
-
-    public function getResponse()
-    {
-        return $this->response;
     }
 
     /**
