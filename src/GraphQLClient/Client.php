@@ -2,10 +2,6 @@
 
 namespace GraphQLClient;
 
-use App\Helpers\GraphQLClient\Field;
-use App\Helpers\GraphQLClient\GraphQLException;
-use App\Helpers\GraphQLClient\Query;
-use App\Helpers\GraphQLClient\Variable;
 use GuzzleHttp\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 
