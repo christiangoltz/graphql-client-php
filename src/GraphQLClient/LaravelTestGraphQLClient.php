@@ -34,7 +34,7 @@ class LaravelTestGraphQLClient extends Client
     protected function postQuery(array $data): array
     {
         $response = $this->post($this->getBaseUrl(), $data);
-        $responseBody = json_decode($response->getContent(), true);
+        $responseBody = json_decode($this->response->getContent(), true);
 
         if (isset($responseBody['errors'])) {
             throw new GraphQLException(sprintf('Mutation failed with error %s', json_encode($response['errors'])));
