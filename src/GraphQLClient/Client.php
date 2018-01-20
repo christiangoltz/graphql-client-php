@@ -2,7 +2,6 @@
 
 namespace GraphQLClient;
 
-use GuzzleHttp\ClientInterface;
 use PHPUnit\Framework\Assert;
 
 abstract class Client
@@ -13,13 +12,9 @@ abstract class Client
     /** @var array */
     protected $variables;
 
-    /** @var ClientInterface */
-    protected $client;
-
-    public function __construct(string $baseUrl, ClientInterface $client = null) {
+    public function __construct(string $baseUrl) {
         $this->baseUrl = $baseUrl;
         $this->variables = [];
-        $this->client = $client;
     }
 
     private function getQueryData(Query $query): array
@@ -128,7 +123,7 @@ abstract class Client
             $data = array_merge(['operations' => json_encode($data)], $multipart);
         }
 
-        return $this->post($data);
+        return $this->postQuery($data);
     }
 
     public function mutate(Query $query, array $multipart = null): ResponseData
@@ -190,16 +185,5 @@ abstract class Client
         }
     }
 
-    protected function post(array $data): array
-    {
-        $response = $this->client->request('POST', $this->getBaseUrl(), $data);
-        $responseBody = json_decode($response->getBody()->getContents(), true);
-
-        if (isset($responseBody['errors'])) {
-            throw new GraphQLException(sprintf('Mutation failed with error %s', json_encode($response['errors'])));
-        }
-
-        return $responseBody;
-
-    }
+    abstract protected function postQuery(array $data): array;
 }
