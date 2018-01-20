@@ -3,6 +3,7 @@
 namespace GraphQLClient;
 
 use Laravel\Lumen\Testing\Concerns\MakesHttpRequests;
+use Laravel\Lumen\Application;
 
 
 /**
@@ -13,6 +14,22 @@ use Laravel\Lumen\Testing\Concerns\MakesHttpRequests;
 class LaravelTestGraphQLClient extends Client
 {
     use MakesHttpRequests;
+
+    /** @var Application */
+    private $app;
+
+    /**
+     * WebTestGraphQLClient constructor.
+     *
+     * @param Application $app
+     * @param string      $baseUrl
+     */
+    public function __construct(Application $app, string $baseUrl)
+    {
+        parent::__construct($baseUrl);
+
+        $this->app = $app;
+    }
 
     protected function postQuery(array $data): array
     {
