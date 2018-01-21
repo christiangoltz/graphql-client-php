@@ -9,23 +9,23 @@ namespace GraphQLClient;
  */
 class ResponseData
 {
-    /** @var array */
+    /** @var mixed */
     private $data;
 
     /**
      * ResponseData constructor.
      *
-     * @param array $data
+     * @param mixed $data
      */
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->data = $data;
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getData(): array
+    public function getData()
     {
         return $this->data;
     }
