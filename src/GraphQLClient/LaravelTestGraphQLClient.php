@@ -37,7 +37,9 @@ class LaravelTestGraphQLClient extends Client
         $responseBody = json_decode($this->response->getContent(), true);
 
         if (isset($responseBody['errors'])) {
-            throw new GraphQLException(sprintf('Mutation failed with error %s', json_encode($response['errors'])));
+            throw new GraphQLException(sprintf(
+                'Mutation failed with error %s', json_encode($responseBody['errors']))
+            );
         }
 
         return $responseBody;
