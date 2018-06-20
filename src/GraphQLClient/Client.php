@@ -185,5 +185,5 @@ abstract class Client
         }
     }
 
-    abstract protected function postQuery(array $data): array;
+    abstract protected function postQuery(array $data, array $headers = []): array;
 }
