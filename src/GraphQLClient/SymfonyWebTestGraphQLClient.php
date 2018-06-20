@@ -28,9 +28,9 @@ class SymfonyWebTestGraphQLClient extends Client
         $this->symfonyClient = $client;
     }
 
-    protected function postQuery(array $data): array
+    protected function postQuery(array $data, array $headers = []): array
     {
-        $this->symfonyClient->request('POST', $this->getBaseUrl(), $data);
+        $this->symfonyClient->request('POST', $this->getBaseUrl(), $data, [], $headers);
         $responseBody = json_decode($this->symfonyClient->getResponse()->getContent(), true);
 
         if (isset($responseBody['errors'])) {

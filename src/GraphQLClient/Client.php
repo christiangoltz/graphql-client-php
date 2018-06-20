@@ -117,24 +117,24 @@ abstract class Client
 
     }
 
-    public function executeQuery(array $data, array $multipart = null)
+    public function executeQuery(array $data, array $multipart = null, array $headers = [])
     {
         if (is_array($multipart)) {
             $data = array_merge(['operations' => json_encode($data)], $multipart);
         }
 
-        return $this->postQuery($data);
+        return $this->postQuery($data, $headers);
     }
 
-    public function mutate(Query $query, array $multipart = null): ResponseData
+    public function mutate(Query $query, array $multipart = null, array $headers = []): ResponseData
     {
-        $response = $this->executeQuery($this->getMutationData($query), $multipart);
+        $response = $this->executeQuery($this->getMutationData($query), $multipart, $headers);
         return new ResponseData($response['data'][$query->getName()]);
     }
 
-    public function query(Query $query):ResponseData
+    public function query(Query $query, array $headers = []):ResponseData
     {
-        $response = $this->executeQuery($this->getQueryData($query));
+        $response = $this->executeQuery($this->getQueryData($query), null, $headers);
 
         return new ResponseData($response['data'][$query->getName()]);
     }
@@ -185,5 +185,5 @@ abstract class Client
         }
     }
 
-    abstract protected function postQuery(array $data): array;
+    abstract protected function postQuery(array $data, array $headers = []): array;
 }
