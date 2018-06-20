@@ -117,7 +117,7 @@ abstract class Client
 
     }
 
-    public function executeQuery(array $data, array $multipart = null, array $headers = [)
+    public function executeQuery(array $data, array $multipart = null, array $headers = [])
     {
         if (is_array($multipart)) {
             $data = array_merge(['operations' => json_encode($data)], $multipart);
