@@ -2,8 +2,8 @@
 
 namespace GraphQLClient;
 
-use Laravel\Lumen\Testing\Concerns\MakesHttpRequests;
-use Laravel\Lumen\Application;
+use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
+use Illuminate\Foundation\Application;
 
 
 /**
