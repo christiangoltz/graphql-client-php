@@ -11,7 +11,7 @@ use Laravel\Lumen\Application;
  *
  * @package parku\AppBundle\Tests\GraphQL
  */
-class LaravelTestGraphQLClient extends Client
+class LumenTestGraphQLClient extends Client
 {
     use MakesHttpRequests;
 
