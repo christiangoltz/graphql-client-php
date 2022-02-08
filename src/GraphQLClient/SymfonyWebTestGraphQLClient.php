@@ -2,7 +2,7 @@
 
 namespace GraphQLClient;
 
-use Symfony\Bundle\FrameworkBundle\Client as SymfonyClient;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser as SymfonyClient;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
